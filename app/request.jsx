@@ -1,3 +1,4 @@
+'use strict';
 // our custom request module
 import React from 'react';
 import Events from './events';
@@ -11,14 +12,21 @@ const request = remote.require('request');
 class Request extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { url: null, method: 'GET' };
+    this.state = {
+      url: 'http://jsonplaceholder.typicode.com/posts/1',
+      method: 'GET',
+      headers: {
+        Accept: '*/*',
+        'User-Agent': 'HTTP Wizard'
+      }
+    }
   }
   handleChange = (e) => {
     const state = {};
     state[e.target.name] = e.target.value;
     this.setState(state);
   }
-  makeRequest = () => {
+  makeRequest = function() {
     // now we can use npm request module
     request(this.state, (err, res, body) => {
       const statusCode = res ? res.statusCode : 'No response';

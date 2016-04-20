@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Request from './request';
@@ -9,7 +10,7 @@ class App extends React.Component {
         <Request />
         <Response />
       </div>
-    ); 
+    );
   }
 }
 ReactDOM.render(<App />, document.getElementById('app'));

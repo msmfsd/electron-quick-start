@@ -1,3 +1,4 @@
+'use strict';
 // our custom headers module
 import React from 'react';
 class Headers extends React.Component {

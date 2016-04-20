@@ -1,3 +1,4 @@
+'use strict';
 // our custom events module
 import {EventEmitter} from 'events';
 // instantiate and export

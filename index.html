@@ -2,12 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>HTTP app</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div id="app" class="container"></div>
+    <!-- SCRIPTS -->
+    <script>
+      const remote = require('electron').remote;
+    </script>
+    <script src="js/app.js"></script>
   </body>
 </html>

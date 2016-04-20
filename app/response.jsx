@@ -1,3 +1,4 @@
+'use strict';
 // our custom response module
 import React from 'react';
 import Events from './events';
@@ -34,7 +35,7 @@ class Response extends React.Component {
   handleResult(result) {
     this.setState({ result: result });
   }
-  handleSelectTab = (e) => {
+  handleSelectTab = function(e) {
     const tab = e.target.dataset.tab;
     this.setState({ tab: tab });
   }
