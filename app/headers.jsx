@@ -1,6 +1,7 @@
 'use strict';
-// our custom headers module
+
 import React from 'react';
+
 class Headers extends React.Component {
   render() {
     const headers = this.props.headers || {};
@@ -12,6 +13,7 @@ class Headers extends React.Component {
         </tr>
       );
     });
+
     return (
       <tbody className="header-body">
         {headerRows}
@@ -19,4 +21,5 @@ class Headers extends React.Component {
     );
   }
 }
+
 export default Headers;

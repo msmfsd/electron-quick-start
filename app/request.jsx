@@ -1,14 +1,11 @@
 'use strict';
-// our custom request module
+
 import React from 'react';
 import Events from './events';
-//The remote module provides a simple way to do inter-process communication
-// (IPC) between the renderer process (web page) and the main process.
-// In Electron, GUI-related modules (such as dialog, menu etc.) are only
-// available in the main process, not in the renderer process. In order to use
-// them from the renderer process, the ipc module is necessary to send
-// inter-process messages to the main process.
+import RequestHeaders from './request_headers';
+
 const request = remote.require('request');
+
 class Request extends React.Component {
   constructor(props) {
     super(props);
@@ -19,15 +16,16 @@ class Request extends React.Component {
         Accept: '*/*',
         'User-Agent': 'HTTP Wizard'
       }
-    }
+    };
   }
+
   handleChange = (e) => {
     const state = {};
     state[e.target.name] = e.target.value;
     this.setState(state);
   }
-  makeRequest = function() {
-    // now we can use npm request module
+
+  makeRequest = () => {
     request(this.state, (err, res, body) => {
       const statusCode = res ? res.statusCode : 'No response';
       const result = {
@@ -36,10 +34,34 @@ class Request extends React.Component {
         headers: res ? res.headers : [],
         error: err ? JSON.stringify(err, null, 2) : ''
       };
+
       Events.emit('result', result);
+
       new Notification(`HTTP response finished: ${statusCode}`)
     });
   }
+
+  handleAdd = (header) => {
+    const headers = this.state.headers;
+    headers[header.name] = header.value;
+    this.setState({ headers: headers });
+  }
+
+  handleChangeHeader = (e) => {
+    const key = e.target.dataset.headerName;
+    const headers = this.state.headers;
+    headers[key] = e.target.value;
+    this.setState({ headers: headers });
+  }
+
+  handleRemoveHeader = (e) => {
+    e.preventDefault();
+    const key = e.target.dataset.headerName;
+    const headers = this.state.headers;
+    delete headers[key];
+    this.setState({ headers: headers });
+  }
+
   render() {
     return (
       <div className="request">
@@ -63,6 +85,21 @@ class Request extends React.Component {
               onChange={this.handleChange} />
           </div>
           <div className="form-row">
+            <table className="headers">
+              <thead>
+                <tr>
+                  <th className="name">Header Name</th>
+                  <th className="value">Header Value</th>
+                </tr>
+              </thead>
+              <RequestHeaders
+                headers={this.state.headers}
+                handleChangeHeader={this.handleChangeHeader}
+                handleRemoveHeader={this.handleRemove}
+                handleAdd={this.handleAdd} />
+            </table>
+          </div>
+          <div className="form-row">
             <a className="btn" onClick={this.makeRequest}>Make request</a>
           </div>
         </div>
@@ -70,4 +107,5 @@ class Request extends React.Component {
     );
   }
 }
+
 export default Request;

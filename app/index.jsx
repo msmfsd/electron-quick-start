@@ -1,8 +1,10 @@
 'use strict';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Request from './request';
 import Response from './response';
+
 class App extends React.Component {
   render() {
     return (
@@ -13,4 +15,5 @@ class App extends React.Component {
     );
   }
 }
+
 ReactDOM.render(<App />, document.getElementById('app'));
